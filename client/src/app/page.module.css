@@ -1,0 +1,93 @@
+.welcomeMain {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: var(--space-xl) var(--space-lg);
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15vh;
+  width: 100%;
+}
+
+.logoPlaceholder {
+  width: 140px;
+  height: 140px;
+  border-radius: 70px;
+  background: linear-gradient(135deg, var(--color-orange), var(--color-yellow));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+  box-shadow: 0 10px 30px rgba(255, 126, 95, 0.4);
+  position: relative;
+  animation: floatLogo 6s ease-in-out infinite;
+  border: 4px solid rgba(255,255,255,0.5);
+}
+
+@keyframes floatLogo {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.logoText {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--color-pure-white);
+  text-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  letter-spacing: -1px;
+}
+
+.textContainer {
+  text-align: center;
+}
+
+.textContainer h1 {
+  margin-bottom: var(--space-md);
+  color: var(--color-brown);
+}
+
+.textContainer p {
+  color: rgba(45, 52, 54, 0.7);
+  font-size: 16px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.actionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.signInWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+@media (min-width: 768px) {
+  .welcomeMain {
+    padding: var(--space-xxl);
+  }
+  .contentWrapper {
+    max-width: 600px;
+    margin-top: 10vh;
+  }
+  .actionContainer {
+    max-width: 400px;
+    margin-bottom: var(--space-xxl);
+  }
+}
+

@@ -1,0 +1,205 @@
+.previewMain {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: transparent;
+  animation: slideUp 0.5s ease forwards;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  height: 64px;
+  box-shadow: var(--shadow-low);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  z-index: 10;
+}
+
+.backButton {
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--color-brown);
+  transition: transform 0.2s;
+}
+
+.backButton:hover {
+  transform: translateX(-4px);
+}
+
+.closeButton {
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--color-dark-gray);
+  transition: transform 0.2s;
+}
+
+.closeButton:hover {
+  transform: scale(1.1);
+  color: var(--color-error);
+}
+
+.content {
+  flex: 1;
+  padding: var(--space-lg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(45, 52, 54, 0.6);
+  text-align: center;
+  margin-bottom: var(--space-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.previewCard {
+  background: var(--color-pure-white);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-high);
+  border: 1px solid rgba(255,255,255,0.8);
+  transition: transform 0.3s ease;
+}
+
+.previewCard:hover {
+  transform: translateY(-4px);
+}
+
+.imagePlaceholder {
+  height: 280px;
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 16px;
+}
+
+.captionArea {
+  padding: var(--space-lg);
+}
+
+.captionText {
+  font-size: 16px;
+  color: var(--color-dark-gray);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+  font-weight: 500;
+}
+
+.hashtags {
+  font-size: 15px;
+  color: var(--color-orange);
+  font-weight: 600;
+}
+
+.scheduleSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.scheduleSection .sectionTitle {
+  text-align: left;
+}
+
+.timeOption {
+  background: rgba(255, 255, 255, 0.7);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-low);
+}
+
+.timeOption:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.timeOption span {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-dark-gray);
+}
+
+.timeOption.selected {
+  border-color: var(--color-orange);
+  background: var(--color-pure-white);
+  box-shadow: 0 10px 20px rgba(255, 126, 95, 0.15);
+}
+
+.recommendedBadge {
+  font-size: 12px !important;
+  color: var(--color-orange) !important;
+  background: rgba(255, 126, 95, 0.1);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.footer {
+  padding: var(--space-lg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+.scheduleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: var(--color-pure-white);
+  border: none;
+  border-radius: var(--radius-btn);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.scheduleBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+@media (min-width: 768px) {
+  .content {
+    align-items: center;
+  }
+  .previewCard {
+    width: 100%;
+    max-width: 600px;
+  }
+  .scheduleSection {
+    width: 100%;
+    max-width: 600px;
+  }
+  .footer {
+    display: flex;
+    justify-content: center;
+  }
+  .footer button {
+    max-width: 400px;
+  }
+}
+

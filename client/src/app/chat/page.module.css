@@ -1,0 +1,227 @@
+.chatMain {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  background: transparent;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  height: 64px;
+  box-shadow: var(--shadow-low);
+  z-index: 10;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+.menuIcon {
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.menuIcon:hover {
+  transform: scale(1.1);
+}
+
+.title {
+  font-weight: 700;
+  color: var(--color-brown);
+  font-size: 18px;
+  letter-spacing: -0.5px;
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.icon {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.chatContainer {
+  flex: 1;
+  padding: var(--space-lg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.messageRowRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-xs);
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.messageRowLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: rgba(0,0,0,0.4);
+  font-weight: 500;
+  margin: 0 var(--space-sm);
+}
+
+.messageBubbleUser {
+  background: linear-gradient(135deg, var(--color-orange), var(--color-yellow));
+  color: var(--color-pure-white);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-bubble-user) var(--radius-bubble-user) 4px var(--radius-bubble-user);
+  max-width: 85%;
+  font-size: 15px;
+  line-height: 1.5;
+  box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+}
+
+.messageBubbleAi {
+  background: var(--color-pure-white);
+  color: var(--color-dark-gray);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-bubble-ai) var(--radius-bubble-ai) var(--radius-bubble-ai) 4px;
+  max-width: 85%;
+  font-size: 15px;
+  line-height: 1.5;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+.suggestionCard {
+  background: var(--color-pure-white);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-high);
+  max-width: 90%;
+  margin-top: var(--space-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+.suggestionCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+.imagePreview {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+}
+
+.cardContent {
+  padding: var(--space-lg);
+}
+
+.cardContent h4 {
+  margin-bottom: var(--space-xs);
+  font-size: 18px;
+}
+
+.cardActions {
+  display: flex;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  background: #fafafa;
+}
+
+.actionBtn {
+  flex: 1;
+  padding: var(--space-md) 0;
+  background: transparent;
+  border: none;
+  border-right: 1px solid rgba(0,0,0,0.05);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-orange);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.actionBtn:last-child {
+  border-right: none;
+}
+
+.actionBtn:hover {
+  background: rgba(255, 126, 95, 0.1);
+  color: #E66741;
+}
+
+.inputArea {
+  padding: var(--space-md) var(--space-lg);
+  background: transparent;
+  padding-bottom: var(--space-xl);
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  background: var(--color-pure-white);
+  border-radius: 30px;
+  padding: 0 var(--space-lg);
+  height: 60px;
+  box-shadow: var(--shadow-high);
+  border: 1px solid rgba(255,255,255,0.8);
+  transition: transform 0.3s ease;
+}
+
+.inputContainer:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(255, 126, 95, 0.2);
+}
+
+.inputIcon {
+  margin-right: var(--space-sm);
+  font-size: 20px;
+}
+
+.inputContainer input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: var(--font-primary);
+  background: transparent;
+  color: var(--color-dark-gray);
+}
+
+.inputContainer input::placeholder {
+  color: #aaa;
+}
+
+@media (min-width: 768px) {
+  .messageBubbleUser, .messageBubbleAi {
+    max-width: 60%;
+  }
+  .suggestionCard {
+    max-width: 60%;
+  }
+  .inputArea {
+    padding: var(--space-lg) var(--space-xxl);
+  }
+}
+
