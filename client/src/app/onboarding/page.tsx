@@ -13,16 +13,21 @@ export default function OnboardingScreen() {
     orderValue: '500-1000'
   });
 
+  const saveContextAndNavigate = () => {
+    localStorage.setItem('businessContext', JSON.stringify(formData));
+    router.push('/chat');
+  };
+
   const handleNext = () => {
     if (step < 3) {
       setStep(step + 1);
     } else {
-      router.push('/chat');
+      saveContextAndNavigate();
     }
   };
 
   const handleSkip = () => {
-    router.push('/chat');
+    saveContextAndNavigate();
   };
 
   return (

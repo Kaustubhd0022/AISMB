@@ -9,9 +9,21 @@ interface AIResponse {
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-const SYSTEM_PROMPT = `
+const getSystemPrompt = (context: any) => {
+  let contextString = '';
+  if (context) {
+    contextString = `
+Context about the seller's business:
+- Product/Service: ${context.product || 'Not specified'}
+- Location: ${context.location || 'Not specified'}
+- Average Order Value: ${context.orderValue || 'Not specified'}
+`;
+  }
+
+  return `
 You are a friendly, helpful AI marketing assistant for home-based D2C sellers in India.
 Your goal is to help sellers create content, run campaigns, and grow their business through simple conversation.
+${contextString}
 
 Guidelines:
 - Be friendly and casual, use Hinglish where natural
@@ -31,17 +43,18 @@ Format the JSON block EXACTLY like this, enclosed in triple backticks:
 \`\`\`
 If you are just having a normal conversation or asking clarifying questions, do NOT include the JSON block.
 `;
+};
 
 export async function POST(req: Request) {
   try {
-    const { message } = await req.json();
+    const { message, context } = await req.json();
 
     if (!process.env.GEMINI_API_KEY) {
       return NextResponse.json({ success: false, error: 'API key not configured' }, { status: 500 });
     }
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-    const prompt = `${SYSTEM_PROMPT}\n\nUser: ${message}\nAI:`;
+    const prompt = `${getSystemPrompt(context)}\n\nUser: ${message}\nAI:`;
 
     const result = await model.generateContent(prompt);
     const responseText = result.response.text();

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
@@ -16,6 +16,7 @@ interface Message {
 export default function ChatScreen() {
   const router = useRouter();
   const [message, setMessage] = useState('');
+  const [businessContext, setBusinessContext] = useState<any>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -38,14 +39,29 @@ export default function ChatScreen() {
       cardData: {
         image: "Fresh Mango Cake 🥭",
         caption: "Just out of the oven! Limited portions available...",
-        hashtags: "#mangocake #homemade #freshbaking"
+        hashtags: "#mangocake #homemade #freshbaking",
+        imageUrl: "https://loremflickr.com/400/300/cake,dessert?lock=3"
       }
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleAction = (action: string) => {
-    if (action === 'edit' || action === 'schedule') {
+  useEffect(() => {
+    // Load business context from onboarding
+    const ctx = localStorage.getItem('businessContext');
+    if (ctx) {
+      try {
+        setBusinessContext(JSON.parse(ctx));
+      } catch (e) {}
+    }
+  }, []);
+
+  const handleAction = (action: string, msg: Message) => {
+    if (action === 'edit' || action === 'schedule' || action === 'approve') {
+      // Save the specific card data to local storage for the preview screen
+      if (msg.cardData) {
+        localStorage.setItem('previewData', JSON.stringify(msg.cardData));
+      }
       router.push('/preview');
     } else {
       alert(`Action: ${action}`);
@@ -74,19 +90,30 @@ export default function ChatScreen() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage.text })
+        body: JSON.stringify({ 
+          message: userMessage.text,
+          context: businessContext
+        })
       });
       const resData = await response.json();
 
       if (resData.success && resData.data) {
+        const aiMessageId = (Date.now() + 1).toString();
         const aiMessage: Message = {
-          id: (Date.now() + 1).toString(),
+          id: aiMessageId,
           sender: 'ai',
           text: resData.data.text,
           timestamp: new Date(resData.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           type: resData.data.type,
           cardData: resData.data.cardData
         };
+
+        // If it's a suggestion, append an image URL
+        if (aiMessage.type === 'suggestion' && aiMessage.cardData) {
+           const keywords = businessContext?.product ? encodeURIComponent(businessContext.product.split(' ')[0]) : 'product';
+           aiMessage.cardData.imageUrl = `https://loremflickr.com/400/300/${keywords},sale?lock=${aiMessageId}`;
+        }
+
         setMessages(prev => [...prev, aiMessage]);
       }
     } catch (error) {
@@ -128,7 +155,7 @@ export default function ChatScreen() {
                 <div className={styles.suggestionCard}>
                   <div 
                     className={styles.imagePreview} 
-                    style={{ backgroundImage: `url(https://source.unsplash.com/random/400x300/?food,cake&sig=${msg.id})` }}
+                    style={{ backgroundImage: `url(${msg.cardData.imageUrl})` }}
                   >
                   </div>
                   <div className={styles.cardContent}>
@@ -137,9 +164,9 @@ export default function ChatScreen() {
                     <p className="body-small" style={{ color: 'var(--color-orange)' }}>{msg.cardData.hashtags}</p>
                   </div>
                   <div className={styles.cardActions}>
-                    <button className={styles.actionBtn} onClick={() => handleAction('approve')}>Approve</button>
-                    <button className={styles.actionBtn} onClick={() => handleAction('edit')}>Edit</button>
-                    <button className={styles.actionBtn} onClick={() => handleAction('schedule')}>Schedule</button>
+                    <button className={styles.actionBtn} onClick={() => handleAction('approve', msg)}>Approve</button>
+                    <button className={styles.actionBtn} onClick={() => handleAction('edit', msg)}>Edit</button>
+                    <button className={styles.actionBtn} onClick={() => handleAction('schedule', msg)}>Schedule</button>
                   </div>
                 </div>
               )}
